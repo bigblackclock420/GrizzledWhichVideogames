@@ -22,11 +22,20 @@ class MathGameApp:
         self.result_label = tk.Label(root, text="")
         self.result_label.pack(pady=10)
 
+        self.difficulty = 1
+
         self.generate_question()
 
     def generate_question(self):
-        num1 = random.randint(1, 20)
-        num2 = random.randint(1, 20)
+        if self.difficulty == 1:
+            num1 = random.randint(1, 10)
+            num2 = random.randint(1, 10)
+        elif self.difficulty == 2:
+            num1 = random.randint(10, 20)
+            num2 = random.randint(1, 10)
+        elif self.difficulty == 3:
+            num1 = random.randint(10, 20)
+            num2 = random.randint(10, 20)
 
         if random.choice([True, False]):
             self.answer = num1 + num2
@@ -64,7 +73,13 @@ class MathGameApp:
             self.submit_button.config(state="disabled")
 
     def update_score(self):
-        self.root.title(f"Math Game - Score: {self.score}/{self.num_questions}")
+        self.root.title(f"Math Game - Score: {self.score}/{self.num_questions} - Difficulty: {self.difficulty}")
+
+        if self.num_questions == 10:
+          
+            if self.difficulty < 3:
+                self.difficulty += 1
+            self.num_questions = 0
 
 def run():
     root = tk.Tk()
